@@ -29,7 +29,7 @@ RESET=1
 CHECK_OS_VERSION=`cat /etc/issue |sed -n 1"$1"p|awk '{printf $1}' |tr 'a-z' 'A-Z'`
 
 #list the software need to be installed to the variable FILELIST
-UBUNTU_TOOLS_LIBS="python-pip python-m2crypto git supervisor \
+UBUNTU_TOOLS_LIBS="htop nload python-pip python-m2crypto git supervisor \
 				 language-pack-zh*"
 
 CENTOS_TOOLS_LIBS="php55w php55w-opcache mysql55w mysql55w-server php55w-mysql php55w-gd libjpeg* \
