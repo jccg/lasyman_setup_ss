@@ -16,6 +16,7 @@
 #----------------------------------------
 #mysql data
 HOST="localhost"
+MHOST="localhost"
 USER="root"
 PORT="3306"
 ROOT_PASSWD=""
@@ -87,7 +88,10 @@ function install_soft_for_each(){
 			sleep 1
 			echo "$file installed ."
 		done
-		pip install cymysql shadowsocks
+		pip install --upgrade pip
+		pip install setuptools cymysql shadowsocks
+		echo_supervisord_conf > /etc/supervisord.conf
+
 	elif [[ ${CENTOS} -eq 1 ]];then
 		echo "Will install softwears on your CentOs system:"
 		update_system
@@ -136,7 +140,7 @@ function setup_manyuser_ss()
 	cd ${SS_ROOT}
 	#modify Config.py
 	echo -e "modify Config.py...\n"
-	sed -i "/^MYSQL_HOST/ s#'.*'#'localhost'#" ${SS_ROOT}/Config.py
+	sed -i "/^MYSQL_HOST/ s#'.*'#'${MHOST}'#" ${SS_ROOT}/Config.py
 	sed -i "/^MYSQL_USER/ s#'.*'#'${USER}'#" ${SS_ROOT}/Config.py
 	sed -i "/^MYSQL_PASS/ s#'.*'#'${ROOT_PASSWD}'#" ${SS_ROOT}/Config.py
 	sed -i "/rc4-md5/ s#"rc4-md5"#aes-256-cfb#" ${SS_ROOT}/config.json
@@ -147,6 +151,7 @@ function setup_manyuser_ss()
 #
 #judge whether root or not
 if [ "$UID" -eq 0 ];then
+read -p "(Please input MySQL ip:):" MHOST
 read -p "(Please input New MySQL root password):" ROOT_PASSWD
 if [ "$ROOT_PASSWD" = "" ]; then
 echo "Error: Password can't be NULL!!"
