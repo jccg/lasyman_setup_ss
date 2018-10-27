@@ -89,7 +89,7 @@ function install_soft_for_each(){
 			echo "$file installed ."
 		done
 		pip install --upgrade pip
-		pip install setuptools cymysql shadowsocks
+		pip install setuptools cymysql shadowsocks boto3 awscli
 		echo_supervisord_conf > /etc/supervisord.conf
 		sed -i '$a\\n[program:ss]\ndirectory=/root/shadowsocks/shadowsocks/\ncommand=python server.py\nuser=root\nautostart=true\nautoresart=true\nstartsecs=10\nstartretries=36\nstderr_logfile=/var/log/supervisor/ss.stderr.log\nstdout_logfile=/var/log/supervisor/ss.stdout.log\n' /etc/supervisord.conf
 
